@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  phone     String?
+  type      String
+  message   String
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model Property {
+  id        String    @id @default(cuid())
+  name      String
+  address   String
+  city      String
+  owner     String
+  status    String    @default("active")
+  createdAt DateTime  @default(now())
+  bookings  Booking[]
+}
+
+model Booking {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  guestName  String
+  guestEmail String
+  checkIn    DateTime
+  checkOut   DateTime
+  status     String   @default("confirmed")
+  revenue    Float
+  createdAt  DateTime @default(now())
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  role     String @default("admin")
+}
