@@ -97,8 +97,8 @@ export default function EstimationPage() {
           autoPlay muted loop playsInline
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
         >
-          <source src="https://assets.mixkit.co/videos/4301/4301-1080.mp4" type="video/mp4" />
-          <source src="https://assets.mixkit.co/videos/40078/40078-720.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/40070/40070-720.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/50176/50176-720.mp4" type="video/mp4" />
         </video>
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(12,31,53,.9) 0%, rgba(12,31,53,.35) 60%, transparent 100%)" }} />
         <div style={{ position: "relative", width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "clamp(80px,10vw,120px) clamp(24px,4vw,52px) clamp(52px,7vw,72px)" }}>
