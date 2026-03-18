@@ -7,7 +7,7 @@ const commentCaMarcheSteps = [
   { n: "01", title: "Premier échange", desc: "Échangeons sur votre projet, vos attentes et vos objectifs de rentabilité." },
   { n: "02", title: "Analyse du bien et estimation", desc: "Visite de votre propriété, photos professionnelles et estimation de vos revenus locatifs." },
   { n: "03", title: "Création de l'annonce Airbnb", desc: "Rédaction optimisée, mise en ligne sur les plateformes et stratégie tarifaire personnalisée." },
-  { n: "04", title: "Gestion complète des séjours", desc: "Réservations, accueil, ménage, maintenance — on s'occupe de tout, vous percevez vos revenus." },
+  { n: "04", title: "Vous percevez vos revenus", desc: "Votre bien est en ligne, nos équipes s'activent. Chaque mois, vos revenus locatifs arrivent directement sur votre compte." },
 ];
 
 const proprioServices = [
@@ -15,9 +15,10 @@ const proprioServices = [
   { n: "02", title: "Gestion des réservations", desc: "Traitement des demandes et coordination du planning pour un taux d'occupation optimal toute l'année." },
   { n: "03", title: "Communication voyageurs 24/7", desc: "Notre équipe répond à tous les messages de vos voyageurs, 7j/7, 24h/24, sans interruption." },
   { n: "04", title: "Optimisation dynamique des prix", desc: "Stratégie tarifaire intelligente basée sur la saisonnalité, les événements locaux et la demande." },
-  { n: "05", title: "Ménage & gestion du linge", desc: "Nettoyage professionnel entre chaque séjour, fourniture et entretien du linge de qualité." },
+  { n: "05", title: "Ménage & gestion du linge", desc: "Nettoyage professionnel entre chaque séjour et entretien du linge de qualité." },
   { n: "06", title: "Check-in / Check-out", desc: "Accueil personnalisé et état des lieux entrée/sortie pour votre totale tranquillité." },
   { n: "07", title: "Maintenance & assistance", desc: "Équipe de plombiers, serruriers et électriciens disponibles rapidement pour toute intervention." },
+  { n: "08", title: "Réseaux partenaires", desc: "Mise en relation avec nos prestataires sélectionnés — transferts, excursions, restaurants, bien-être — pour offrir un séjour entièrement personnalisé à vos voyageurs." },
 ];
 
 const pourquoiItems = [
@@ -42,11 +43,11 @@ const voyageursPreview = [
   { title: "Réseaux partenaires", desc: "Accès à notre réseau exclusif de prestataires locaux sélectionnés sur la Côte d'Azur." },
 ];
 
-const galleryImages = [
-  "/images/gallery/prop1.jpg",
-  "/images/gallery/prop2.jpg",
-  "/images/gallery/prop3.jpg",
-  "/images/gallery/prop4.jpg",
+const galleryVideos = [
+  "https://assets.mixkit.co/videos/47193/47193-720.mp4", // Grand yacht naviguant en mer
+  "https://assets.mixkit.co/videos/4446/4446-720.mp4",   // Yacht de luxe au crépuscule dans un port
+  "https://assets.mixkit.co/videos/40080/40080-720.mp4", // Panorama aérien port au coucher de soleil
+  "https://assets.mixkit.co/videos/4301/4301-720.mp4",   // Port avec yachts de luxe
 ];
 
 export default function HomePage() {
@@ -106,6 +107,25 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ DRONE VIDEO BREAK ═══ */}
+      <section style={{ position: "relative", height: "85vh", overflow: "hidden" }}>
+        <video
+          autoPlay muted loop playsInline
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        >
+          <source src="https://assets.mixkit.co/videos/47286/47286-720.mp4" type="video/mp4" />
+        </video>
+        {/* Overlay gradient */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.55) 100%)" }} />
+        {/* Texte centré */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "16px", textAlign: "center", padding: "0 24px" }}>
+          <span style={{ fontFamily: "var(--sans)", fontSize: "11px", fontWeight: 500, letterSpacing: "4px", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>Gestion locative</span>
+          <h2 style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(36px, 5.5vw, 76px)", color: "#fff", lineHeight: 1.1, maxWidth: "720px" }}>
+            Votre bien, révélé dans toute sa valeur.
+          </h2>
+        </div>
+      </section>
+
       {/* ═══ 4. PROPRIÉTAIRES — GESTION LOCATIVE ═══ */}
       <section id="proprio" className="section warm">
         <div className="wrap">
@@ -114,7 +134,7 @@ export default function HomePage() {
           </RevealOnScroll>
           <RevealOnScroll delay={0.1}>
             <h2 className="ed-text" style={{ textAlign: "left", maxWidth: "600px" }}>
-              Chaque aspect de votre location, maîtrisé.
+              Tout ce que nous gérons pour vous, au quotidien.
             </h2>
           </RevealOnScroll>
           <RevealOnScroll delay={0.2}>
@@ -156,7 +176,7 @@ export default function HomePage() {
                 <div className="pourquoi-frame-tl" />
                 <div className="pourquoi-frame-br" />
                 <div className="pourquoi-stat">
-                  <div className="pourquoi-stat-num">+31<em>%</em></div>
+                  <div className="pourquoi-stat-num">+25<em>%</em></div>
                   <div className="pourquoi-stat-label">Revenus supplémentaires</div>
                 </div>
               </div>
@@ -247,10 +267,15 @@ export default function HomePage() {
             <span className="eb">Portfolio</span>
           </RevealOnScroll>
           <RevealOnScroll delay={0.2}>
-            <div className="gallery-grid">
-              {galleryImages.map((src, i) => (
-                <div key={i} className="gallery-cell">
-                  <img src={src} alt={`Propriété ${i + 1}`} loading="lazy" />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
+              {[
+                { src: "/images/gallery/prop1.jpg", alt: "Appartement vue mer" },
+                { src: "/images/gallery/prop2.jpg", alt: "Villa avec piscine" },
+                { src: "/images/gallery/prop3.jpg", alt: "Maison moderne piscine" },
+                { src: "/images/gallery/prop4.jpg", alt: "Villa vue aérienne" },
+              ].map((img, i) => (
+                <div key={i} style={{ borderRadius: "4px", overflow: "hidden", height: "clamp(180px, 28vw, 380px)" }}>
+                  <img src={img.src} alt={img.alt} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
               ))}
             </div>

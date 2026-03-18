@@ -9,13 +9,8 @@ const engagements = [
   },
   {
     num: "02",
-    title: "La qualité avant le volume",
-    desc: "Nous travaillons avec un nombre limité de propriétaires pour maintenir un niveau de service élevé sur chaque bien. Votre propriété n'est jamais noyée dans un portefeuille trop large.",
-  },
-  {
-    num: "03",
-    title: "Rémunération au résultat",
-    desc: "20 % des revenus encaissés, sans frais cachés ni engagement minimum. Plus votre bien performe, plus nous sommes motivés à faire mieux.",
+    title: "Des services à forte valeur ajoutée",
+    desc: "Photos professionnelles, accueil hôtelier soigné, pricing adapté et réseau de prestataires locaux — tout est pensé pour que chaque séjour soit une expérience que vos voyageurs retiennent.",
   },
 ];
 
@@ -89,10 +84,10 @@ export default function AProposPage() {
               Nos engagements
             </p>
             <h2 style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "clamp(28px,3.2vw,42px)", fontWeight: 300, color: "var(--color-navy, #0C1F35)", lineHeight: 1.2, maxWidth: "520px", marginBottom: "56px" }}>
-              Trois principes qui définissent<br />notre façon de travailler.
+              Deux principes qui définissent<br />notre façon de travailler.
             </h2>
           </RevealOnScroll>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "clamp(32px,5vw,56px)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "clamp(32px,5vw,56px)" }}>
             {engagements.map((e, i) => (
               <RevealOnScroll key={i} delay={i * 0.12}>
                 <div style={{ borderTop: "1px solid rgba(12,31,53,.1)", paddingTop: "28px" }}>

@@ -23,6 +23,13 @@ body {
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
+/* ─── TITRES CORMORANT ITALIC ─── */
+h1, h2 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+}
+
 body {
   background: var(--color-cream);
   color: var(--color-dark);

@@ -6,34 +6,34 @@ import RevealOnScroll from "@/components/RevealOnScroll";
 
 const LOCATIONS = [
   { id: "nice", label: "Nice", mult: 1.0 },
-  { id: "antibes", label: "Antibes", mult: 1.1 },
-  { id: "cannes", label: "Cannes", mult: 1.3 },
-  { id: "menton", label: "Menton", mult: 0.88 },
-  { id: "monaco", label: "Monaco", mult: 1.75 },
-  { id: "saint-tropez", label: "Saint-Tropez", mult: 1.95 },
+  { id: "antibes", label: "Antibes", mult: 1.12 },
+  { id: "cannes", label: "Cannes", mult: 1.38 },
+  { id: "menton", label: "Menton", mult: 0.84 },
+  { id: "monaco", label: "Monaco", mult: 2.1 },
+  { id: "saint-tropez", label: "Saint-Tropez", mult: 2.65 },
 ];
 
 const TYPES = [
-  { id: "studio", label: "Studio", sublabel: "jusqu'à 2 pers.", rate: 85 },
-  { id: "t2", label: "T2", sublabel: "2–4 pers.", rate: 120 },
-  { id: "t3", label: "T3", sublabel: "4–6 pers.", rate: 170 },
-  { id: "t4", label: "T4+", sublabel: "6–8 pers.", rate: 240 },
-  { id: "villa", label: "Villa", sublabel: "8+ pers.", rate: 390 },
+  { id: "studio", label: "Studio", sublabel: "jusqu'à 2 pers.", rate: 92 },
+  { id: "t2", label: "T2", sublabel: "2–4 pers.", rate: 135 },
+  { id: "t3", label: "T3", sublabel: "4–6 pers.", rate: 195 },
+  { id: "t4", label: "T4+", sublabel: "6–8 pers.", rate: 290 },
+  { id: "villa", label: "Villa", sublabel: "8+ pers.", rate: 520 },
 ];
 
 const AMENITIES = [
-  { id: "sea", label: "Vue mer", bonus: 0.18 },
-  { id: "pool", label: "Piscine", bonus: 0.22 },
-  { id: "terrace", label: "Terrasse", bonus: 0.08 },
+  { id: "sea", label: "Vue mer", bonus: 0.22 },
+  { id: "pool", label: "Piscine", bonus: 0.26 },
+  { id: "terrace", label: "Terrasse", bonus: 0.09 },
   { id: "parking", label: "Parking", bonus: 0.06 },
   { id: "ac", label: "Climatisation", bonus: 0.05 },
 ];
 
 const SEASONS = [
-  { label: "Haute saison", sub: "Juillet — Août", nights: 62, occ: 0.92, mult: 1.9 },
-  { label: "Été étendu", sub: "Juin & Septembre", nights: 61, occ: 0.80, mult: 1.35 },
-  { label: "Intersaison", sub: "Avr., Mai & Octobre", nights: 92, occ: 0.58, mult: 1.0 },
-  { label: "Basse saison", sub: "Novembre — Mars", nights: 150, occ: 0.42, mult: 0.75 },
+  { label: "Haute saison", sub: "Juillet — Août", nights: 62, occ: 0.95, mult: 2.2 },
+  { label: "Été étendu", sub: "Juin & Septembre", nights: 61, occ: 0.82, mult: 1.45 },
+  { label: "Intersaison", sub: "Avr., Mai & Octobre", nights: 92, occ: 0.60, mult: 1.0 },
+  { label: "Basse saison", sub: "Novembre — Mars", nights: 150, occ: 0.38, mult: 0.70 },
 ];
 
 function fmt(n: number) {
@@ -68,7 +68,14 @@ export default function EstimationPage() {
     const netMonthly = netAnnual / 12;
     const maxSeasonRevenue = Math.max(...seasonRevenues.map(s => s.revenue));
 
-    return { nightlyBase, seasonRevenues, grossAnnual, netAnnual, netMonthly, maxSeasonRevenue };
+    // Nouveaux indicateurs
+    const totalBooked = seasonRevenues.reduce((sum, s) => sum + s.bookedNights, 0);
+    const avgOccupancy = Math.round((totalBooked / 365) * 100);
+    const peakNightly = Math.round(nightlyBase * SEASONS[0].mult);
+    const selfManagedNet = grossAnnual * 0.68; // sans optimisation professionnelle
+    const gainVsSelf = netAnnual - selfManagedNet;
+
+    return { nightlyBase, seasonRevenues, grossAnnual, netAnnual, netMonthly, maxSeasonRevenue, avgOccupancy, peakNightly, selfManagedNet, gainVsSelf };
   }, [loc, type, amenities]);
 
   const btnBase: React.CSSProperties = {
@@ -86,11 +93,13 @@ export default function EstimationPage() {
 
       {/* ── HERO ── */}
       <section style={{ position: "relative", minHeight: "60vh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
-        <img
-          src="/images/gallery/prop1.jpg"
-          alt="Estimation locative Riviera"
+        <video
+          autoPlay muted loop playsInline
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
-        />
+        >
+          <source src="https://assets.mixkit.co/videos/5363/5363-720.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/1955/1955-720.mp4" type="video/mp4" />
+        </video>
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(12,31,53,.9) 0%, rgba(12,31,53,.35) 60%, transparent 100%)" }} />
         <div style={{ position: "relative", width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "clamp(80px,10vw,120px) clamp(24px,4vw,52px) clamp(52px,7vw,72px)" }}>
           <RevealOnScroll>
@@ -210,32 +219,55 @@ export default function EstimationPage() {
 
             {/* Répartition saisonnière */}
             <div>
-              <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "9px", fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", color: "var(--color-gold, #C9A96E)", marginBottom: "24px" }}>
+              <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "9px", fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", color: "var(--color-gold, #C9A96E)", marginBottom: "28px" }}>
                 Répartition saisonnière estimée
               </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
-                {result.seasonRevenues.map((s) => (
-                  <div key={s.label}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
-                      <div>
-                        <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "13px", fontWeight: 400, color: "var(--color-navy, #0C1F35)" }}>
-                          {s.label}
-                        </span>
-                        <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.4)", marginLeft: "10px" }}>
-                          {s.sub} · {s.bookedNights} nuits
-                        </span>
+
+              {/* Bar chart visuel */}
+              <div style={{ display: "flex", alignItems: "flex-end", gap: "10px", height: "130px", marginBottom: "28px" }}>
+                {result.seasonRevenues.map((s, i) => {
+                  const isPeak = i === 0;
+                  const barH = Math.max(8, (s.revenue / result.maxSeasonRevenue) * 100);
+                  return (
+                    <div key={s.label} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", height: "100%", gap: "0" }}>
+                      <div style={{ flex: 1, width: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                        <div style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "12px", fontWeight: 300, color: isPeak ? "var(--color-gold, #C9A96E)" : "rgba(12,31,53,.45)", textAlign: "center", marginBottom: "6px", whiteSpace: "nowrap" }}>
+                          {fmt(s.revenue)}
+                        </div>
+                        <div style={{
+                          width: "100%",
+                          height: `${barH}%`,
+                          background: isPeak ? "var(--color-gold, #C9A96E)" : "rgba(12,31,53,.1)",
+                          transition: "height .5s ease",
+                          minHeight: "6px",
+                        }} />
                       </div>
-                      <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "17px", fontWeight: 300, color: "var(--color-navy, #0C1F35)" }}>
+                      <div style={{ paddingTop: "10px", textAlign: "center" }}>
+                        <div style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "9px", fontWeight: isPeak ? 500 : 300, color: isPeak ? "var(--color-gold, #C9A96E)" : "rgba(12,31,53,.4)", letterSpacing: "0.5px" }}>
+                          {s.label.split(' ')[0]}
+                        </div>
+                        <div style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "9px", fontWeight: 300, color: "rgba(12,31,53,.3)", marginTop: "2px" }}>
+                          {s.bookedNights}n
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Détails compacts */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+                {result.seasonRevenues.map((s, i) => (
+                  <div key={s.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0", borderBottom: "1px solid rgba(12,31,53,.06)" }}>
+                    <div>
+                      <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "13px", fontWeight: i === 0 ? 400 : 300, color: "var(--color-navy, #0C1F35)" }}>{s.label}</span>
+                      <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.35)", marginLeft: "8px" }}>{s.sub}</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
+                      <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "10px", color: "rgba(12,31,53,.35)" }}>{s.bookedNights} nuits</span>
+                      <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "16px", fontWeight: 300, color: i === 0 ? "var(--color-gold, #C9A96E)" : "var(--color-navy, #0C1F35)", transition: "all .3s", minWidth: "72px", textAlign: "right" }}>
                         {fmt(s.revenue)}
                       </span>
-                    </div>
-                    <div style={{ height: "2px", background: "rgba(12,31,53,.08)", borderRadius: "2px", overflow: "hidden" }}>
-                      <div style={{
-                        height: "100%",
-                        width: `${(s.revenue / result.maxSeasonRevenue) * 100}%`,
-                        background: "var(--color-gold, #C9A96E)",
-                        transition: "width .5s ease",
-                      }} />
                     </div>
                   </div>
                 ))}
@@ -246,48 +278,88 @@ export default function EstimationPage() {
 
           {/* ── DROITE — résultats sticky ── */}
           <div style={{ position: "sticky", top: "100px" }}>
-            <div style={{ background: "#fff", padding: "clamp(28px,4vw,40px)" }}>
-              <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "9px", fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", color: "var(--color-gold, #C9A96E)", marginBottom: "28px" }}>
-                Votre estimation
-              </p>
+            <div style={{ background: "#fff", padding: "clamp(24px,3.5vw,36px)" }}>
+
+              {/* Header + jauge occupation */}
+              <div style={{ marginBottom: "24px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
+                  <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "9px", fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", color: "var(--color-gold, #C9A96E)" }}>
+                    Votre estimation
+                  </p>
+                  <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 400, color: "var(--color-navy, #0C1F35)" }}>
+                    {result.avgOccupancy}% occupé
+                  </span>
+                </div>
+                <div style={{ height: "3px", background: "rgba(12,31,53,.08)", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${result.avgOccupancy}%`, background: "var(--color-navy, #0C1F35)", transition: "width .6s ease" }} />
+                </div>
+              </div>
 
               {/* Revenu net — chiffre principal */}
-              <div style={{ paddingBottom: "24px", borderBottom: "1px solid rgba(12,31,53,.07)", marginBottom: "24px" }}>
-                <p style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.45)", marginBottom: "8px", letterSpacing: "0.3px" }}>
+              <div style={{ paddingBottom: "20px", borderBottom: "1px solid rgba(12,31,53,.07)", marginBottom: "20px" }}>
+                <p style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.45)", marginBottom: "6px" }}>
                   Revenus nets estimés / an
                 </p>
-                <div style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "clamp(40px,5vw,56px)", fontWeight: 300, color: "var(--color-navy, #0C1F35)", lineHeight: 1, transition: "all .3s" }}>
+                <div style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "clamp(36px,4.5vw,52px)", fontWeight: 300, color: "var(--color-navy, #0C1F35)", lineHeight: 1, transition: "all .3s" }}>
                   {fmt(result.netAnnual)}
                 </div>
-                <p style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.35)", marginTop: "8px" }}>
+                <p style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.35)", marginTop: "6px" }}>
                   Après commission Riviera Concierge (20 %)
                 </p>
               </div>
 
               {/* Détails */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "14px", paddingBottom: "28px", borderBottom: "1px solid rgba(12,31,53,.07)", marginBottom: "28px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", paddingBottom: "20px", borderBottom: "1px solid rgba(12,31,53,.07)", marginBottom: "20px" }}>
                 {[
                   { label: "Revenu brut annuel", value: fmt(result.grossAnnual) },
-                  { label: "Revenu net / mois (moy.)", value: fmt(result.netMonthly) },
+                  { label: "Revenu net / mois", value: fmt(result.netMonthly) },
                   { label: "Tarif moyen / nuit", value: fmt(result.nightlyBase) },
+                  { label: "Saison haute / nuit", value: fmt(result.peakNightly) },
                 ].map(({ label, value }) => (
                   <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                     <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "rgba(12,31,53,.5)" }}>
                       {label}
                     </span>
-                    <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "18px", fontWeight: 300, color: "var(--color-navy, #0C1F35)", transition: "all .3s" }}>
+                    <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "17px", fontWeight: 300, color: "var(--color-navy, #0C1F35)", transition: "all .3s" }}>
                       {value}
                     </span>
                   </div>
                 ))}
               </div>
 
+              {/* Comparaison vs gestion seule */}
+              <div style={{ background: "rgba(201,169,110,.07)", border: "1px solid rgba(201,169,110,.25)", padding: "16px", marginBottom: "20px" }}>
+                <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "8.5px", fontWeight: 300, letterSpacing: "3px", textTransform: "uppercase", color: "var(--color-gold, #C9A96E)", marginBottom: "14px" }}>
+                  vs. gestion autonome
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                    <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "rgba(12,31,53,.5)" }}>Sans accompagnement</span>
+                    <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "16px", fontWeight: 300, color: "rgba(12,31,53,.5)", transition: "all .3s" }}>{fmt(result.selfManagedNet)}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                    <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "var(--color-navy, #0C1F35)" }}>Avec Riviera Concierge</span>
+                    <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "16px", fontWeight: 300, color: "var(--color-navy, #0C1F35)", transition: "all .3s" }}>{fmt(result.netAnnual)}</span>
+                  </div>
+                  <div style={{ height: "1px", background: "rgba(201,169,110,.2)", margin: "2px 0" }} />
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                    <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 500, color: "var(--color-navy, #0C1F35)" }}>Gain estimé</span>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                      <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "18px", fontWeight: 400, color: "var(--color-gold, #C9A96E)", transition: "all .3s" }}>+{fmt(result.gainVsSelf)}</span>
+                      <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "10px", fontWeight: 500, color: "var(--color-gold, #C9A96E)", background: "rgba(201,169,110,.15)", padding: "2px 6px" }}>
+                        +{Math.round((result.gainVsSelf / result.selfManagedNet) * 100)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* CTA */}
               <Link href="/contact" className="cta-btn-navy" style={{ textAlign: "center", display: "block" }}>
                 Obtenir une estimation réelle <span>→</span>
               </Link>
-              <p style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "11px", fontWeight: 300, color: "rgba(12,31,53,.3)", textAlign: "center", lineHeight: 1.6, marginTop: "14px" }}>
-                Estimation indicative basée sur les moyennes du marché. Les revenus réels varient selon l&apos;emplacement exact et l&apos;état du bien.
+              <p style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "10.5px", fontWeight: 300, color: "rgba(12,31,53,.3)", textAlign: "center", lineHeight: 1.6, marginTop: "12px" }}>
+                Estimation indicative basée sur les moyennes du marché.
               </p>
             </div>
           </div>
