@@ -1,58 +1,56 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: { absolute: "Marelle Home — Conciergerie Airbnb & Gestion Locative Côte d'Azur" },
+  description:
+    "Marelle Home, conciergerie Airbnb sur la Côte d'Azur. Gestion complète de votre location saisonnière à Nice, Cannes, Antibes, Saint-Tropez. Commission 20 %, sans frais fixes.",
+  alternates: {
+    canonical: "https://marelle-home.fr",
+  },
+};
+
 import HeroVideo from "@/components/HeroVideo";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import TypeWriter from "@/components/TypeWriter";
 import Link from "next/link";
+import ScrollVelocity from "@/components/ScrollVelocity";
 
 const commentCaMarcheSteps = [
-  { n: "01", title: "Premier échange", desc: "Échangeons sur votre projet, vos attentes et vos objectifs de rentabilité." },
-  { n: "02", title: "Analyse du bien et estimation", desc: "Visite de votre propriété, photos professionnelles et estimation de vos revenus locatifs." },
-  { n: "03", title: "Création de l'annonce Airbnb", desc: "Rédaction optimisée, mise en ligne sur les plateformes et stratégie tarifaire personnalisée." },
-  { n: "04", title: "Vous percevez vos revenus", desc: "Votre bien est en ligne, nos équipes s'activent. Chaque mois, vos revenus locatifs arrivent directement sur votre compte." },
+  { n: "01", title: "Premier échange", desc: "Un premier échange pour découvrir votre bien et définir ensemble vos objectifs." },
+  { n: "02", title: "Analyse & estimation", desc: "Visite sur place, photographies professionnelles et projection personnalisée de vos revenus." },
+  { n: "03", title: "Mise en valeur & diffusion", desc: "Annonce optimisée, diffusion multi-plateformes et stratégie tarifaire sur mesure." },
+  { n: "04", title: "Revenus & sérénité", desc: "Vos revenus, versés chaque mois. Notre équipe veille sur votre bien, jour après jour." },
 ];
 
 const proprioServices = [
-  { n: "01", title: "Création & optimisation de l'annonce", desc: "Photos professionnelles, rédaction soignée et optimisation SEO pour maximiser votre visibilité sur Airbnb." },
-  { n: "02", title: "Gestion des réservations", desc: "Traitement des demandes et coordination du planning pour un taux d'occupation optimal toute l'année." },
-  { n: "03", title: "Communication voyageurs 24/7", desc: "Notre équipe répond à tous les messages de vos voyageurs, 7j/7, 24h/24, sans interruption." },
-  { n: "04", title: "Optimisation dynamique des prix", desc: "Stratégie tarifaire intelligente basée sur la saisonnalité, les événements locaux et la demande." },
-  { n: "05", title: "Ménage & gestion du linge", desc: "Nettoyage professionnel entre chaque séjour et entretien du linge de qualité." },
-  { n: "06", title: "Check-in / Check-out", desc: "Accueil personnalisé et état des lieux entrée/sortie pour votre totale tranquillité." },
-  { n: "07", title: "Maintenance & assistance", desc: "Équipe de plombiers, serruriers et électriciens disponibles rapidement pour toute intervention." },
-  { n: "08", title: "Réseaux partenaires", desc: "Mise en relation avec nos prestataires sélectionnés — transferts, excursions, restaurants, bien-être — pour offrir un séjour entièrement personnalisé à vos voyageurs." },
+  { n: "01", title: "Création & optimisation de l'annonce", desc: "Photos professionnelles, rédaction soignée et présence optimisée sur toutes les plateformes." },
+  { n: "02", title: "Gestion des réservations", desc: "Coordination complète du planning pour un taux d'occupation optimisé, toute l'année." },
+  { n: "03", title: "Communication voyageurs 24/7", desc: "Réponse rapide et soignée à chaque message de vos voyageurs, à toute heure." },
+  { n: "04", title: "Optimisation dynamique des prix", desc: "Tarification ajustée en temps réel selon la saisonnalité, les événements et la demande." },
+  { n: "05", title: "Coordination du ménage", desc: "Organisation du nettoyage professionnel et du linge entre chaque séjour — ces frais sont facturés directement au voyageur via la plateforme, sans impact sur vos revenus." },
+  { n: "06", title: "Accueil & maintenance", desc: "Accueil personnalisé à chaque arrivée et intervention rapide pour toute urgence ou maintenance." },
 ];
 
-const pourquoiItems = [
-  { n: "01", title: "Accompagnement personnalisé", desc: "Un interlocuteur dédié qui connaît votre bien et s'adapte à vos besoins. Pas de gestion industrielle." },
-  { n: "02", title: "Basés sur la Côte d'Azur", desc: "Nous vivons ici, nous connaissons le terrain. Une équipe locale, réactive et disponible." },
-  { n: "03", title: "Aucun frais fixe", desc: "Vous ne payez que sur les revenus générés. Pas de forfait, pas d'engagement — résiliation libre." },
-];
-
-
-const confortItems = [
-  { title: "Kits d'accueil soignés", desc: "Café, thé, produits de toilette Rituals et snacks artisanaux sélectionnés.", tag: "Option" },
-  { title: "Petit-déjeuner à l'arrivée", desc: "Panier de produits frais : viennoiseries, confitures, fruits et jus pressés.", tag: "Option" },
-  { title: "Réapprovisionnement", desc: "Renouvellement des produits essentiels selon la durée et vos préférences.", tag: "Option" },
-  { title: "Ménage pour longs séjours", desc: "Entretien quotidien ou hebdomadaire pour les séjours de plus de 5 nuits.", tag: "Option" },
-  { title: "Carnet de découvertes", desc: "Un guide personnalisé avec nos meilleures adresses : restaurants, sorties, excursions et lieux incontournables de la Côte d'Azur.", tag: "" },
-];
-
-const voyageursPreview = [
-  { title: "Transfert aéroport", desc: "Chauffeur privé pour votre arrivée à Nice Côte d'Azur." },
-  { title: "Excursions en bateau", desc: "Sorties en mer vers les îles de Lérins, Monaco, Saint-Tropez." },
-  { title: "Sport & bien-être", desc: "Cours privés de yoga, pass salle de sport et activités exclusives." },
-  { title: "Réseaux partenaires", desc: "Accès à notre réseau exclusif de prestataires locaux sélectionnés sur la Côte d'Azur." },
-];
-
-const galleryVideos = [
-  "https://assets.mixkit.co/videos/47193/47193-720.mp4", // Grand yacht naviguant en mer
-  "https://assets.mixkit.co/videos/4446/4446-720.mp4",   // Yacht de luxe au crépuscule dans un port
-  "https://assets.mixkit.co/videos/40080/40080-720.mp4", // Panorama aérien port au coucher de soleil
-  "https://assets.mixkit.co/videos/4301/4301-720.mp4",   // Port avec yachts de luxe
-];
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "Quel est votre taux de commission ?", acceptedAnswer: { "@type": "Answer", text: "Notre commission est de 20 % des revenus locatifs perçus, hors frais de ménage facturés aux voyageurs et hors taxes de séjour. Aucun frais fixe, aucun forfait, aucun frais de démarrage." } },
+    { "@type": "Question", name: "Y a-t-il des frais d'inscription ou de mise en service ?", acceptedAnswer: { "@type": "Answer", text: "Non. Vous ne payez rien avant de percevoir vos premiers revenus. Nous prenons en charge la création de l'annonce et les photos professionnelles sans supplément." } },
+    { "@type": "Question", name: "Puis-je bloquer des dates pour mon usage personnel ?", acceptedAnswer: { "@type": "Answer", text: "Absolument. Votre calendrier vous appartient. Vous pouvez bloquer des dates à tout moment, sans justification et sans limite." } },
+    { "@type": "Question", name: "Sur quelles plateformes publiez-vous mon annonce ?", acceptedAnswer: { "@type": "Answer", text: "Airbnb, Booking.com, Vrbo et Abritel — avec une stratégie de visibilité et de tarification adaptée à chaque plateforme." } },
+    { "@type": "Question", name: "Que se passe-t-il en cas de dégât causé par un voyageur ?", acceptedAnswer: { "@type": "Answer", text: "Nous assurons le suivi complet du dossier auprès des plateformes et de leurs garanties. Vous êtes informé à chaque étape." } },
+    { "@type": "Question", name: "Comment suivre les performances de mon bien ?", acceptedAnswer: { "@type": "Answer", text: "Vous recevez chaque mois un reporting détaillé : réservations, revenus encaissés, taux d'occupation et dépenses. Transparence totale." } },
+    { "@type": "Question", name: "Quel est le préavis pour arrêter la collaboration ?", acceptedAnswer: { "@type": "Answer", text: "Aucun engagement de durée minimale. Vous pouvez mettre fin à la collaboration avec un préavis de 30 jours, sans pénalité. Les réservations déjà confirmées sont honorées jusqu'à leur terme." } },
+    { "@type": "Question", name: "Proposez-vous un service de photographie professionnelle ?", acceptedAnswer: { "@type": "Answer", text: "Oui, inclus dans notre commission. Nous organisons une séance photo professionnelle avant la mise en ligne de votre annonce." } }
+  ],
+};
 
 export default function HomePage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+
       {/* ═══ 1. HERO ═══ */}
       <HeroVideo />
 
@@ -65,13 +63,13 @@ export default function HomePage() {
           <RevealOnScroll delay={0.1}>
             <div className="intro-type-wrap">
               <p className="intro-type">
-                <TypeWriter sentences={["Nous valorisons votre bien immobilier.", "Nous maximisons vos revenus locatifs.", "Nous offrons une expérience mémorable à vos voyageurs.", "Nous gérons tout, de A à Z."]} />
+                <TypeWriter sentences={["Nous valorisons votre bien immobilier.", "Nous optimisons vos revenus locatifs.", "Nous offrons une expérience mémorable à vos voyageurs.", "Nous prenons soin de chaque détail."]} />
               </p>
             </div>
           </RevealOnScroll>
           <RevealOnScroll delay={0.2}>
             <p style={{ marginTop: "8px", fontSize: "clamp(16px,2vw,20px)", color: "var(--color-muted)", fontFamily: "var(--sans)", fontWeight: 300, maxWidth: "600px", marginLeft: "auto", marginRight: "auto", lineHeight: 1.8 }}>
-              Une équipe locale passionnée par la Côte d&apos;Azur, dédiée à votre propriété et à vos voyageurs.
+              Un bien d&apos;exception mérite une gestion à sa hauteur.
             </p>
           </RevealOnScroll>
           <RevealOnScroll delay={0.3}>
@@ -82,8 +80,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 3. COMMENT ÇA MARCHE ═══ */}
-      <section id="comment-ca-marche" className="section" style={{ background: "#fff" }}>
+      {/* ═══ COMMENT ÇA MARCHE ═══ */}
+      <section id="comment-ca-marche" className="section warm">
         <div className="wrap">
           <RevealOnScroll>
             <span className="eb eb-gold">Comment ça marche</span>
@@ -107,26 +105,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ PLATEFORMES ═══ */}
+      <section style={{ background: "#fff", borderTop: "1px solid rgba(43,38,32,.06)", borderBottom: "1px solid rgba(43,38,32,.06)", padding: "clamp(18px,2.5vw,28px) 0", overflow: "hidden" }}>
+        <ScrollVelocity
+          texts={["Airbnb  ·  Booking.com  ·  Vrbo  ·  Abritel  ·  "]}
+          velocity={50}
+          className=""
+          parallaxStyle={{ width: "100%" }}
+          scrollerStyle={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "clamp(11px,1.2vw,13px)", fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", color: "rgba(43,38,32,.35)" }}
+        />
+      </section>
+
       {/* ═══ DRONE VIDEO BREAK ═══ */}
       <section style={{ position: "relative", height: "85vh", overflow: "hidden" }}>
         <video
           autoPlay muted loop playsInline
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         >
-          <source src="https://assets.mixkit.co/videos/47286/47286-720.mp4" type="video/mp4" />
+          <source src="/videos/hero-luxury.mp4" type="video/mp4" />
         </video>
-        {/* Overlay gradient */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.55) 100%)" }} />
-        {/* Texte centré */}
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "16px", textAlign: "center", padding: "0 24px" }}>
-          <span style={{ fontFamily: "var(--sans)", fontSize: "11px", fontWeight: 500, letterSpacing: "4px", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>Gestion locative</span>
+          <span style={{ fontFamily: "var(--sans)", fontSize: "11px", fontWeight: 500, letterSpacing: "4px", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>Côte d&apos;Azur</span>
           <h2 style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(36px, 5.5vw, 76px)", color: "#fff", lineHeight: 1.1, maxWidth: "720px" }}>
             Votre bien, révélé dans toute sa valeur.
           </h2>
         </div>
       </section>
 
-      {/* ═══ 4. PROPRIÉTAIRES — GESTION LOCATIVE ═══ */}
+      {/* ═══ GESTION LOCATIVE ═══ */}
       <section id="proprio" className="section warm">
         <div className="wrap">
           <RevealOnScroll>
@@ -151,17 +158,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ 5. POURQUOI NOUS CHOISIR ═══ */}
+      {/* ═══ ENGAGEMENT LOCAL ═══ */}
       <section id="pourquoi" className="section" style={{ background: "#fff" }}>
         <div className="wrap">
           <div className="pourquoi-top">
             <div className="pourquoi-text">
               <RevealOnScroll>
-                <span className="eb" style={{ color: "rgba(0,0,0,.25)" }}>Pourquoi nous choisir</span>
+                <span className="eb" style={{ color: "rgba(0,0,0,.25)" }}>Basés sur la Côte d&apos;Azur</span>
               </RevealOnScroll>
               <RevealOnScroll delay={0.1}>
                 <h2 className="ed-text" style={{ textAlign: "left", maxWidth: "520px" }}>
-                  Une conciergerie locale et transparente.
+                  Une expertise locale au service de votre bien.
                 </h2>
               </RevealOnScroll>
               <RevealOnScroll delay={0.3}>
@@ -176,118 +183,84 @@ export default function HomePage() {
                 <div className="pourquoi-frame-tl" />
                 <div className="pourquoi-frame-br" />
                 <div className="pourquoi-stat">
-                  <div className="pourquoi-stat-num">+25<em>%</em></div>
-                  <div className="pourquoi-stat-label">Revenus supplémentaires</div>
+                  <div className="pourquoi-stat-num">+17<em>%</em></div>
+                  <div className="pourquoi-stat-label">de revenus nets en plus (estimé, selon simulation)</div>
                 </div>
-              </div>
-            </RevealOnScroll>
-          </div>
-          <RevealOnScroll delay={0.3}>
-            <div className="why-grid" style={{ marginTop: "64px" }}>
-              {pourquoiItems.map((item) => (
-                <div key={item.n} className="why-item">
-                  <div className="why-n">{item.n}</div>
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* ═══ 7. PRESTATIONS HÔTELIÈRES ═══ */}
-      <section id="confort" className="section" style={{ background: "#fff" }}>
-        <div className="wrap">
-          <div className="confort-layout">
-            <RevealOnScroll>
-              <div className="confort-photo">
-                <img src="/images/pool.jpg" alt="Chambre appartement prestige" loading="lazy" />
-                <div className="confort-tag">
-                  <span className="pill" style={{ background: "rgba(249,248,246,.9)", fontSize: "11px" }}>Services in-stay</span>
-                </div>
-              </div>
-            </RevealOnScroll>
-            <RevealOnScroll delay={0.2}>
-              <div>
-                <span className="eb">Services in-stay</span>
-                <h2 className="ed-text" style={{ textAlign: "left", fontSize: "clamp(22px,3vw,38px)" }}>
-                  Des services soignés dans chaque logement
-                </h2>
-                <ul className="c-list">
-                  {confortItems.map((item, i) => (
-                    <li key={i}>
-                      <div>
-                        <h4>{item.title}</h4>
-                        <p>{item.desc}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </RevealOnScroll>
           </div>
         </div>
       </section>
 
-      {/* ═══ 8. EXPÉRIENCE VOYAGEURS (aperçu) ═══ */}
-      <section id="voyageurs" className="section warm">
-        <div className="wrap">
+      {/* ═══ FAQ ═══ */}
+      <section id="faq" className="section" style={{ background: "#fff" }}>
+        <div className="wrap" style={{ maxWidth: "800px" }}>
           <RevealOnScroll>
-            <span className="eb">Expérience voyageurs</span>
+            <span className="eb eb-gold">Questions fréquentes</span>
           </RevealOnScroll>
           <RevealOnScroll delay={0.1}>
-            <h2 className="ed-text" style={{ textAlign: "left", maxWidth: "580px" }}>
-              Une expérience sur mesure pour vos voyageurs
+            <h2 className="ed-text" style={{ textAlign: "left", maxWidth: "540px" }}>
+              Tout ce que vous souhaitez savoir avant de nous confier votre bien.
             </h2>
           </RevealOnScroll>
           <RevealOnScroll delay={0.2}>
-            <div className="voy-grid">
-              {voyageursPreview.map((svc, i) => (
-                <div key={i} className="voy-item">
-                  <span className="voy-ico" />
-                  <h3>{svc.title}</h3>
-                  <p>{svc.desc}</p>
-                </div>
-              ))}
-            </div>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.3}>
-            <div style={{ marginTop: "40px" }}>
-              <Link href="/experience-voyageurs" className="pill">Découvrir tous nos services voyageurs</Link>
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* ═══ 9. PORTFOLIO ═══ */}
-      <section className="section cream">
-        <div className="wrap" style={{ textAlign: "center" }}>
-          <RevealOnScroll>
-            <span className="eb">Portfolio</span>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.2}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
+            <div style={{ marginTop: "48px", display: "flex", flexDirection: "column" }}>
               {[
-                { src: "/images/gallery/prop1.jpg", alt: "Appartement vue mer" },
-                { src: "/images/gallery/prop2.jpg", alt: "Villa avec piscine" },
-                { src: "/images/gallery/prop3.jpg", alt: "Maison moderne piscine" },
-                { src: "/images/gallery/prop4.jpg", alt: "Villa vue aérienne" },
-              ].map((img, i) => (
-                <div key={i} style={{ borderRadius: "4px", overflow: "hidden", height: "clamp(180px, 28vw, 380px)" }}>
-                  <img src={img.src} alt={img.alt} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                </div>
+                { q: "Quel est votre taux de commission ?", a: "Notre commission est de 20 % des revenus locatifs perçus, hors frais de ménage facturés aux voyageurs et hors taxes de séjour. Aucun frais fixe, aucun forfait, aucun frais de démarrage." },
+                { q: "Y a-t-il des frais d'inscription ou de mise en service ?", a: "Non. Vous ne payez rien avant de percevoir vos premiers revenus. Nous prenons en charge la création de l'annonce et les photos professionnelles sans supplément." },
+                { q: "Puis-je bloquer des dates pour mon usage personnel ?", a: "Absolument. Votre calendrier vous appartient. Vous pouvez bloquer des dates à tout moment, sans justification et sans limite." },
+                { q: "Sur quelles plateformes publiez-vous mon annonce ?", a: "Airbnb, Booking.com, Vrbo et Abritel — avec une stratégie de visibilité et de tarification adaptée à chaque plateforme." },
+                { q: "Que se passe-t-il en cas de dégât causé par un voyageur ?", a: "Nous assurons le suivi complet du dossier auprès des plateformes et de leurs garanties. Vous êtes informé à chaque étape." },
+                { q: "Comment suivre les performances de mon bien ?", a: "Vous recevez chaque mois un reporting détaillé : réservations, revenus encaissés, taux d'occupation et dépenses. Transparence totale." },
+                { q: "Quel est le préavis pour arrêter la collaboration ?", a: "Aucun engagement de durée minimale. Vous pouvez mettre fin à la collaboration avec un préavis de 30 jours, sans pénalité. Les réservations déjà confirmées sont honorées jusqu'à leur terme." },
+                { q: "Proposez-vous un service de photographie professionnelle ?", a: "Oui, inclus dans notre commission. Nous organisons une séance photo professionnelle avant la mise en ligne de votre annonce." },
+              ].map((item, i) => (
+                <details key={i} style={{ borderBottom: "1px solid rgba(43,38,32,.08)", padding: "0" }}>
+                  <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "22px 0", cursor: "pointer", listStyle: "none", fontFamily: "var(--serif)", fontSize: "clamp(15px,1.6vw,19px)", fontWeight: 400, color: "var(--color-navy, #2B2620)", lineHeight: 1.3 }}>
+                    {item.q}
+                    <span style={{ fontFamily: "var(--sans)", fontSize: "20px", fontWeight: 200, color: "var(--color-gold, #B0764F)", flexShrink: 0, marginLeft: "16px" }}>+</span>
+                  </summary>
+                  <p style={{ fontFamily: "var(--sans)", fontSize: "13.5px", fontWeight: 300, color: "rgba(43,38,32,.6)", lineHeight: 1.8, paddingBottom: "22px", maxWidth: "620px" }}>
+                    {item.a}
+                  </p>
+                </details>
               ))}
             </div>
           </RevealOnScroll>
         </div>
       </section>
 
-      {/* ═══ 10. FINAL CONVERSION CTA ═══ */}
+      {/* ═══ PARTENAIRE LIFESTYLE — NEROLI ═══ */}
+      <section className="sister-banner">
+        <div className="sister-inner">
+          <RevealOnScroll>
+            <div>
+              <span className="sister-eb">Notre partenaire lifestyle</span>
+              <h2>
+                Au-delà du séjour, <em>l&apos;art de vivre la Côte d&apos;Azur</em>.
+              </h2>
+              <p>
+                Neroli est notre partenaire dédié à la conciergerie lifestyle et aux services de luxe sur la Côte d&apos;Azur : voitures d&apos;exception, yachts, jets privés et expériences sur-mesure — pour prolonger chaque séjour de vos voyageurs.
+              </p>
+            </div>
+          </RevealOnScroll>
+          <RevealOnScroll delay={0.15}>
+            <div className="sister-cta-col">
+              <div className="sister-monogram">
+                <span className="sister-monogram-badge">N</span>
+                <span className="sister-monogram-txt">NEROLI<br />Conciergerie &amp; services de luxe</span>
+              </div>
+              <a href="https://neroli-services.fr" target="_blank" rel="noopener noreferrer" className="sister-cta" aria-label="Découvrir Neroli (nouvelle fenêtre)">
+                Découvrir Neroli
+              </a>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* ═══ 9. FINAL CONVERSION CTA ═══ */}
       <section id="cta-final" style={{ background: "var(--color-cream)", padding: "clamp(72px,9vw,110px) clamp(20px,4vw,52px)", textAlign: "center" }}>
         <div className="wrap" style={{ maxWidth: "640px" }}>
-
-          {/* Eyebrow — Josefin Sans thin, très espacé */}
           <RevealOnScroll>
             <h2 style={{
               fontFamily: "var(--font-josefin), sans-serif",
@@ -302,11 +275,9 @@ export default function HomePage() {
               Nous joindre
             </h2>
           </RevealOnScroll>
-
-          {/* Subtitle avec lignes horizontales */}
           <RevealOnScroll delay={0.15}>
             <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "44px" }}>
-              <div style={{ height: "1px", background: "rgba(12,31,53,.2)", flex: 1 }} />
+              <div style={{ height: "1px", background: "rgba(43,38,32,.2)", flex: 1 }} />
               <p style={{
                 fontFamily: "var(--serif)",
                 fontSize: "clamp(14px,1.5vw,20px)",
@@ -319,17 +290,14 @@ export default function HomePage() {
               }}>
                 Confiez votre bien, nous faisons le reste.
               </p>
-              <div style={{ height: "1px", background: "rgba(12,31,53,.2)", flex: 1 }} />
+              <div style={{ height: "1px", background: "rgba(43,38,32,.2)", flex: 1 }} />
             </div>
           </RevealOnScroll>
-
-          {/* CTA button — rectangle navy border */}
           <RevealOnScroll delay={0.3}>
             <Link href="/contact" className="cta-btn-navy">
               Prendre contact <span>→</span>
             </Link>
           </RevealOnScroll>
-
         </div>
       </section>
     </>

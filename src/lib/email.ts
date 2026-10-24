@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp.gmail.com",
+  host: process.env.SMTP_HOST || "smtp.hostinger.com",
   port: Number(process.env.SMTP_PORT) || 587,
   secure: false,
   auth: {
@@ -19,8 +19,8 @@ export async function sendContactEmail(data: {
   message: string;
 }) {
   await transporter.sendMail({
-    from: process.env.SMTP_USER || "contact@riviera-concierge.fr",
-    to: process.env.CONTACT_EMAIL || "contact@riviera-concierge.fr",
+    from: process.env.SMTP_USER || "contact@marelle-home.fr",
+    to: process.env.CONTACT_EMAIL || "contact@marelle-home.fr",
     subject: `Nouveau message de ${data.firstName} ${data.lastName}`,
     html: `
       <h2>Nouveau message de contact</h2>

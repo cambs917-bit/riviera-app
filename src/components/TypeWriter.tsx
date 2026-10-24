@@ -56,8 +56,11 @@ export default function TypeWriter({
 
   return (
     <span>
-      {text}
-      <span className="inline-block ml-1 animate-pulse">|</span>
+      <span className="sr-only">{sentences.join(" ")}</span>
+      <span aria-hidden="true">
+        {text}
+        <span className="inline-block ml-1 animate-pulse">|</span>
+      </span>
     </span>
   );
 }

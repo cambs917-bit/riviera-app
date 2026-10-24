@@ -6,8 +6,6 @@ import TypeWriter from "./TypeWriter";
 export default function HeroVideo() {
   const heroRef = useRef<HTMLElement>(null);
   const videoWrapRef = useRef<HTMLDivElement>(null);
-  const lineTopRef = useRef<HTMLSpanElement>(null);
-  const lineBotRef = useRef<HTMLSpanElement>(null);
   const sloganRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -18,14 +16,12 @@ export default function HeroVideo() {
   useEffect(() => {
     const hero = heroRef.current;
     const videoWrap = videoWrapRef.current;
-    const lineTop = lineTopRef.current;
-    const lineBot = lineBotRef.current;
     const hint = hintRef.current;
     const bg = bgRef.current;
     const bgImg = bgImgRef.current;
-    if (!hero || !videoWrap || !lineTop || !lineBot || !hint || !bg || !bgImg) return;
+    if (!hero || !videoWrap || !hint || !bg || !bgImg) return;
 
-    const SMALL_W = 350, SMALL_H = 450, RADIUS = 16;
+    const SMALL_W = Math.min(350, window.innerWidth * 0.88), SMALL_H = Math.min(450, window.innerWidth * 1.13), RADIUS = 16;
 
     function getVP() {
       return { w: window.innerWidth, h: window.innerHeight };
@@ -41,12 +37,6 @@ export default function HeroVideo() {
       videoWrap!.style.height = h + "px";
       videoWrap!.style.borderRadius = r + "px";
 
-      const textOp = Math.max(0, 1 - p * 2.5);
-      const split = p * vpW * 0.5;
-      lineTop!.style.transform = `translateX(${-split}px)`;
-      lineTop!.style.opacity = String(textOp);
-      lineBot!.style.transform = `translateX(${split}px)`;
-      lineBot!.style.opacity = String(textOp);
       // Blur progressif sur l'image uniquement — le gradient reste net pour le contraste du texte blanc
       const blurPx = p * 22;
       bgImg!.style.filter = `blur(${blurPx}px)`;
@@ -120,7 +110,7 @@ export default function HeroVideo() {
     <section ref={heroRef} className="relative overflow-hidden flex items-center justify-center bg-black">
       {/* Background image — blur sur l'img uniquement */}
       <div ref={bgRef} className="absolute inset-0 z-0 overflow-hidden">
-        <img ref={bgImgRef} src="/images/hero.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img ref={bgImgRef} src="/images/hero.jpg" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover" loading="eager" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/15 to-black/45" />
       </div>
 
@@ -128,38 +118,33 @@ export default function HeroVideo() {
       <div className="absolute inset-x-0 top-0 h-36 z-[8] bg-gradient-to-b from-black/70 to-transparent pointer-events-none" />
 
       {/* Video */}
-      <div ref={videoWrapRef} className="relative z-[2] overflow-hidden flex items-center justify-center" style={{ width: "350px", height: "450px", borderRadius: "16px" }}>
-        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
-          <source src="https://videos.pexels.com/video-files/1409899/1409899-uhd_3840_2160_25fps.mp4" type="video/mp4" />
-        </video>
+      <div ref={videoWrapRef} className="relative z-[2] overflow-hidden flex items-center justify-center" style={{ width: "min(350px, 88vw)", height: "min(450px, 113vw)", borderRadius: "16px" }}>
+        <video src="/videos/hero-property.mp4" autoPlay muted loop playsInline preload="auto" poster="/images/pool.jpg" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/40" />
       </div>
 
-      {/* Split text */}
-      <div className="absolute z-[3] flex flex-col items-center pointer-events-none">
-        <span ref={lineTopRef} className="font-[family-name:var(--font-playfair)] text-[clamp(52px,8vw,110px)] font-normal text-white uppercase tracking-[clamp(6px,1.5vw,18px)] leading-[1.1] whitespace-nowrap">
-          RIVIERA
-        </span>
-        <span ref={lineBotRef} className="font-[family-name:var(--font-playfair)] text-[clamp(52px,8vw,110px)] font-normal text-white uppercase tracking-[clamp(6px,1.5vw,18px)] leading-[1.1] whitespace-nowrap">
-          CONCIERGE
-        </span>
-      </div>
-
       {/* Slogan */}
-      <div ref={sloganRef} className={`absolute bottom-[clamp(48px,7vw,88px)] left-[clamp(20px,4vw,52px)] right-[clamp(20px,4vw,52px)] z-[4] flex items-end justify-between gap-5 transition-all duration-600 ${
+      <div ref={sloganRef} className={`absolute bottom-[clamp(32px,7vw,88px)] left-[clamp(20px,4vw,52px)] right-[clamp(20px,4vw,52px)] z-[4] transition-all duration-600 ${
         showSlogan ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5 pointer-events-none"
-      }`}>
-        <h1 className="font-[family-name:var(--font-cormorant)] text-[clamp(42px,6.5vw,86px)] font-light text-white leading-[1.05] italic max-w-[70%]">
+      }`} style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "clamp(12px,3vw,20px)", flexWrap: "wrap" }}>
+        <h1 className="font-[family-name:var(--font-cormorant)] font-light text-white leading-[1.05] italic" style={{ fontSize: "clamp(32px,6.5vw,86px)", maxWidth: "min(70%, 520px)" }}>
           L&apos;art de sublimer<br />
           <em>
             <TypeWriter sentences={["votre bien.", "chaque séjour.", "vos revenus.", "votre tranquillité."]} />
           </em>
         </h1>
         <div className="flex flex-col items-end gap-4 shrink-0">
-          <p className="text-[12.5px] font-light text-white/70 tracking-wider text-right max-w-[260px] leading-[1.7]">
-            Conciergerie Airbnb à Nice<br />et sur la Riviera française
+          <p className="text-[12.5px] font-light text-white/70 tracking-wider text-right leading-[1.7]" style={{ maxWidth: "min(260px, 45vw)" }}>
+            Conciergerie Immobilière<br />sur la Côte d'Azur
           </p>
-          <a href="#intro" className="pill pill-light">Découvrir</a>
+          <div className="flex flex-col items-end gap-3">
+            <a href="/estimation" style={{ display: "inline-block", padding: "11px 22px", border: "1px solid rgba(255,255,255,.55)", fontFamily: "var(--font-josefin, sans-serif)", fontSize: "10px", fontWeight: 300, letterSpacing: "2px", textTransform: "uppercase", color: "#fff", textDecoration: "none", transition: "all .22s", background: "rgba(255,255,255,.05)", backdropFilter: "blur(4px)", whiteSpace: "nowrap" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,.15)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,.05)"; }}>
+              Estimer mes revenus →
+            </a>
+            <a href="#intro" style={{ fontSize: "10px", fontWeight: 300, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", textDecoration: "none", transition: "color .2s" }}>Découvrir ↓</a>
+          </div>
         </div>
       </div>
 

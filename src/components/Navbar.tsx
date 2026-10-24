@@ -23,44 +23,50 @@ export default function Navbar() {
   const links = [
     { href: "/", label: "Accueil" },
     { href: "/a-propos", label: "À propos" },
-    { href: "/#proprio", label: "Propriétaires" },
     { href: "/estimation", label: "Estimation" },
-    { href: "/experience-voyageurs", label: "Voyageurs" },
     { href: "/tarifs", label: "Tarifs" },
+    { href: "/guide", label: "Réglementation" },
     { href: "/contact", label: "Contact" },
   ];
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[900] flex items-center justify-between px-[clamp(20px,4vw,52px)] transition-all duration-300 border-b ${
+        className={`fixed top-0 left-0 right-0 z-[900] flex items-center justify-between transition-all duration-300 border-b ${
           stuck
-            ? "bg-white border-black/[.07] py-5"
-            : "bg-transparent border-transparent py-7"
+            ? "bg-white border-black/[.07]"
+            : "bg-transparent border-transparent"
         }`}
+        style={{ paddingLeft: "clamp(20px,4vw,52px)" }}
       >
-        <Link href="/" className="flex items-center gap-3 font-[family-name:var(--font-playfair)] text-[13px] font-medium tracking-[3px] uppercase transition-colors duration-200"
-          style={{ color: stuck ? "#111" : "#fff" }}>
-          <svg className="w-[34px] h-[38px] shrink-0" viewBox="0 0 34 38" xmlns="http://www.w3.org/2000/svg">
-            <path stroke={stuck ? "#111" : "#fff"} strokeWidth="1.5" fill="none" d="M17 1 L32 7 L32 20 Q32 32 17 37 Q2 32 2 20 L2 7 Z"/>
-            <text x="17" y="22" textAnchor="middle" fill={stuck ? "#111" : "#fff"} style={{ fontFamily: "var(--display)", fontSize: "13px", fontWeight: 500, letterSpacing: "1px" }}>RC</text>
-          </svg>
-          Riviera Concierge
+        <Link href="/" className="flex items-center" style={{ gap: "12px", textDecoration: "none", paddingTop: stuck ? "20px" : "28px", paddingBottom: stuck ? "20px" : "28px", transition: "padding .3s" }}>
+          <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "clamp(21px,2.2vw,28px)", fontWeight: 500, letterSpacing: "5px", textTransform: "uppercase", color: stuck ? "#2B2620" : "#fff", lineHeight: 1 }}>
+            MARELLE
+          </span>
+          <span style={{ width: "1px", height: "20px", background: stuck ? "rgba(43,38,32,.25)" : "rgba(255,255,255,.4)", display: "inline-block", flexShrink: 0 }} />
+          <span style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "10px", fontWeight: 300, letterSpacing: "4px", textTransform: "uppercase", color: "#B0764F", lineHeight: 1 }}>
+            HOME
+          </span>
         </Link>
 
-        <div className="flex items-center gap-7">
+        <div className="flex items-center gap-5">
+          <a href="https://neroli-services.fr" target="_blank" rel="noopener noreferrer"
+            aria-label="Neroli — conciergerie lifestyle & services de luxe (nouvelle fenêtre)"
+            style={{ color: stuck ? "#2B2620" : "#fff", fontSize: "13px", fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase" }}
+            className="hidden md:inline-flex items-center gap-1.5 transition-opacity duration-200 hover:opacity-70">
+            NEROLI
+          </a>
           <Link href="/contact"
-            style={{ color: stuck ? "#111" : "#fff" }}
-            className="hidden sm:inline-block text-[13.5px] font-medium tracking-[2px] uppercase transition-colors duration-200 hover:opacity-70">
+            className={`nav-cta ${stuck ? "nav-cta-stuck" : ""} hidden sm:inline-flex items-center text-[11px] font-medium tracking-[2.5px] uppercase whitespace-nowrap`}>
             Confier mon bien
           </Link>
           <button
             onClick={() => setMenuOpen(true)}
-            style={{ color: stuck ? "#111" : "#fff" }}
+            style={{ color: stuck ? "#2B2620" : "#fff", paddingRight: "clamp(20px,4vw,52px)" }}
             className="flex items-center gap-3 text-[13.5px] font-medium tracking-[2px] uppercase cursor-pointer transition-colors duration-200 bg-transparent border-none hover:opacity-70">
-            <span className="flex flex-col gap-[5px]">
-              <span className={`block w-[18px] h-[1.5px] transition-colors ${stuck ? "bg-[#111]" : "bg-white"}`} />
-              <span className={`block w-[12px] h-[1.5px] transition-colors ${stuck ? "bg-[#111]" : "bg-white"}`} />
+            <span className="flex flex-col gap-[5px]" aria-hidden="true">
+              <span className={`block w-[18px] h-[1.5px] transition-colors ${stuck ? "bg-[#2B2620]" : "bg-white"}`} />
+              <span className={`block w-[12px] h-[1.5px] transition-colors ${stuck ? "bg-[#2B2620]" : "bg-white"}`} />
             </span>
             Menu
           </button>
@@ -84,26 +90,26 @@ export default function Navbar() {
           className={`w-full max-w-[520px] flex flex-col transition-transform duration-[420ms] ease-[cubic-bezier(.16,1,.3,1)] ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
-          style={{ background: "var(--color-cream, #F5F0E8)" }}
+          style={{ background: "var(--color-cream, #F7F3EC)" }}
         >
           {/* ── Header ── */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "28px 40px", borderBottom: "1px solid rgba(12,31,53,.08)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "28px 40px", borderBottom: "1px solid rgba(43,38,32,.08)" }}>
             {/* Logo */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <svg width="28" height="32" viewBox="0 0 34 38" xmlns="http://www.w3.org/2000/svg">
-                <path stroke="#0C1F35" strokeWidth="1.5" fill="none" d="M17 1 L32 7 L32 20 Q32 32 17 37 Q2 32 2 20 L2 7 Z"/>
-                <text x="17" y="22" textAnchor="middle" fill="#0C1F35" style={{ fontFamily: "serif", fontSize: "11px", fontWeight: 500, letterSpacing: "1px" }}>RC</text>
-              </svg>
-              <span style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "9.5px", fontWeight: 500, letterSpacing: "3.5px", textTransform: "uppercase", color: "var(--color-navy, #0C1F35)" }}>
-                Riviera Concierge
+              <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "17px", fontWeight: 400, letterSpacing: "4px", textTransform: "uppercase", color: "#2B2620", lineHeight: 1 }}>
+                MARELLE
+              </span>
+              <span style={{ width: "1px", height: "16px", background: "rgba(43,38,32,.25)", display: "inline-block", flexShrink: 0 }} />
+              <span style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "8.5px", fontWeight: 300, letterSpacing: "2.5px", textTransform: "uppercase", color: "#B0764F", lineHeight: 1 }}>
+                HOME
               </span>
             </div>
             {/* Close */}
             <button
               onClick={() => setMenuOpen(false)}
-              style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "1px solid rgba(12,31,53,.2)", padding: "7px 16px", cursor: "pointer", color: "rgba(12,31,53,.5)", fontSize: "10px", fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", transition: "all .2s" }}
-              onMouseEnter={e => { e.currentTarget.style.color = "#0C1F35"; e.currentTarget.style.borderColor = "rgba(12,31,53,.5)"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "rgba(12,31,53,.5)"; e.currentTarget.style.borderColor = "rgba(12,31,53,.2)"; }}
+              style={{ display: "flex", alignItems: "center", gap: "8px", background: "none", border: "1px solid rgba(43,38,32,.2)", padding: "7px 16px", cursor: "pointer", color: "rgba(43,38,32,.5)", fontSize: "10px", fontWeight: 500, letterSpacing: "2px", textTransform: "uppercase", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.color = "#2B2620"; e.currentTarget.style.borderColor = "rgba(43,38,32,.5)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = "rgba(43,38,32,.5)"; e.currentTarget.style.borderColor = "rgba(43,38,32,.2)"; }}
             >
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                 <path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
@@ -113,43 +119,58 @@ export default function Navbar() {
           </div>
 
           {/* ── Navigation ── */}
-          <nav style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(32px,5vw,56px) 40px" }}>
+          <nav aria-label="Menu principal" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(32px,5vw,56px) 40px" }}>
             {links.map((link, i) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                style={{ display: "flex", alignItems: "baseline", gap: "16px", padding: "14px 0", borderBottom: "1px solid rgba(12,31,53,.07)", textDecoration: "none", transition: "padding-left .2s" }}
+                style={{ display: "flex", alignItems: "baseline", gap: "16px", padding: "14px 0", borderBottom: "1px solid rgba(43,38,32,.07)", textDecoration: "none", transition: "padding-left .2s" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.paddingLeft = "8px"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.paddingLeft = "0"; }}
               >
-                <span style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "9px", fontWeight: 300, letterSpacing: "2px", color: "var(--color-gold, #C9A96E)", minWidth: "20px" }}>
+                <span style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "9px", fontWeight: 300, letterSpacing: "2px", color: "var(--color-gold, #B0764F)", minWidth: "20px" }}>
                   0{i + 1}
                 </span>
-                <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 300, color: "var(--color-navy, #0C1F35)", lineHeight: 1 }}>
+                <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "clamp(24px,3.2vw,36px)", fontWeight: 300, color: "var(--color-navy, #2B2620)", lineHeight: 1 }}>
                   {link.label}
                 </span>
               </Link>
             ))}
           </nav>
 
+          {/* ── Partenaire lifestyle ── */}
+          <a href="https://neroli-services.fr" target="_blank" rel="noopener noreferrer"
+            aria-label="Neroli — conciergerie lifestyle & services de luxe (nouvelle fenêtre)"
+            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 40px", borderTop: "1px solid rgba(43,38,32,.08)", textDecoration: "none" }}>
+            <span style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              <span style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "8.5px", fontWeight: 300, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(176,118,79,.85)" }}>
+                Notre partenaire lifestyle
+              </span>
+              <span style={{ fontFamily: "var(--font-cormorant, serif)", fontSize: "21px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", color: "var(--color-navy, #2B2620)", lineHeight: 1 }}>
+                NEROLI
+              </span>
+            </span>
+            <span aria-hidden="true" style={{ color: "var(--color-terracotta, #B0764F)", fontSize: "18px" }}>↗</span>
+          </a>
+
           {/* ── Footer contact ── */}
-          <div style={{ padding: "28px 40px", borderTop: "1px solid rgba(12,31,53,.08)", display: "flex", flexDirection: "column", gap: "16px" }}>
-            <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "8.5px", fontWeight: 300, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(201,169,110,.8)", marginBottom: "4px" }}>
+          <div style={{ padding: "28px 40px", borderTop: "1px solid rgba(43,38,32,.08)", display: "flex", flexDirection: "column", gap: "16px" }}>
+            <p style={{ fontFamily: "var(--font-josefin, sans-serif)", fontSize: "8.5px", fontWeight: 300, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(176,118,79,.8)", marginBottom: "4px" }}>
               Nous contacter
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <a href="mailto:contact@riviera-concierge.fr"
-                style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "rgba(12,31,53,.55)", textDecoration: "none", transition: "color .2s" }}
-                onMouseEnter={e => { e.currentTarget.style.color = "#0C1F35"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "rgba(12,31,53,.55)"; }}>
-                contact@riviera-concierge.fr
+              <a href="mailto:contact@marelle-home.fr"
+                style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "rgba(43,38,32,.55)", textDecoration: "none", transition: "color .2s" }}
+                onMouseEnter={e => { e.currentTarget.style.color = "#2B2620"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "rgba(43,38,32,.55)"; }}>
+                contact@marelle-home.fr
               </a>
-              <a href="tel:+33493000000"
-                style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "rgba(12,31,53,.55)", textDecoration: "none", transition: "color .2s" }}
-                onMouseEnter={e => { e.currentTarget.style.color = "#0C1F35"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "rgba(12,31,53,.55)"; }}>
-                +33 (0)4 93 XX XX XX
+              <a href="tel:+33675064828"
+                style={{ fontFamily: "var(--font-dm-sans, sans-serif)", fontSize: "12px", fontWeight: 300, color: "rgba(43,38,32,.55)", textDecoration: "none", transition: "color .2s" }}
+                onMouseEnter={e => { e.currentTarget.style.color = "#2B2620"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "rgba(43,38,32,.55)"; }}>
+                06 75 06 48 28
               </a>
             </div>
             <div style={{ display: "flex", gap: "20px", paddingTop: "4px" }}>
@@ -158,9 +179,9 @@ export default function Navbar() {
                 { label: "Facebook", d: <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/> },
               ].map(({ label, d }) => (
                 <a key={label} href="#" aria-label={label}
-                  style={{ color: "rgba(12,31,53,.3)", transition: "color .2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.color = "var(--color-gold, #C9A96E)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = "rgba(12,31,53,.3)"; }}>
+                  style={{ color: "rgba(43,38,32,.3)", transition: "color .2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.color = "var(--color-gold, #B0764F)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = "rgba(43,38,32,.3)"; }}>
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     {d}
                   </svg>

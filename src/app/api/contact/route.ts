@@ -7,7 +7,8 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { firstName, lastName, email, phone, type, message } = data;
 
-    if (!firstName || !lastName || !email || !type || !message) {
+    // firstName and lastName are optional for estimation leads
+    if (!email || !type || !message) {
       return NextResponse.json({ error: "Champs requis manquants" }, { status: 400 });
     }
 
